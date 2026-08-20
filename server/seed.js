@@ -12,7 +12,7 @@ const categories = [
 ];
 
 async function seed() {
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI, { dbName: process.env.DBNAME });
   console.log('Connected. Clearing old data...');
 
   await Category.deleteMany({});

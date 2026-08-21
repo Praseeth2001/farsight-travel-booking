@@ -29,6 +29,11 @@ exports.getCart = async (req, res) => {
 // POST /api/cart  { packageId, quantity }
 exports.addToCart = async (req, res) => {
   try {
+    // Guests and tourists can add to cart; owners/admins can't (they list packages, not book them)
+    if (req.user && req.user.role !== 'tourist') {
+      return res.status(403).json({ message: 'Only tourist accounts can add packages to cart.' });
+    }
+
     const { packageId, quantity = 1 } = req.body;
     const pkg = await Package.findById(packageId);
     if (!pkg) return res.status(404).json({ message: 'Package not found' });

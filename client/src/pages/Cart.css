@@ -74,6 +74,12 @@
   color: var(--ticket-red);
 }
 
+.cart-error {
+  color: var(--ticket-red);
+  font-size: 13px;
+  margin-top: 16px;
+}
+
 .cart-summary {
   margin-top: 32px;
   display: flex;

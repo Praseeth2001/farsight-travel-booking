@@ -1,37 +1,47 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getPackageById } from '../services/api';
+import * as api from '../services/api';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import StatusBadge from '../components/StatusBadge';
 import './PDP.css';
 
 export default function PDP() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { user } = useAuth();
 
   const [pkg, setPkg] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
   const [adding, setAdding] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
+  const [cartError, setCartError] = useState('');
 
   useEffect(() => {
     setLoading(true);
-    getPackageById(id)
-      .then((data) => {
-        setPkg(data);
-        setActiveImage(0);
-      })
-      .catch(() => setPkg(null))
-      .finally(() => setLoading(false));
+    Promise.all([
+      api.getPackageById(id).catch(() => null),
+      api.getPackageReviews(id).catch(() => []),
+    ]).then(([pkgData, reviewData]) => {
+      setPkg(pkgData);
+      setReviews(reviewData);
+      setActiveImage(0);
+      setLoading(false);
+    });
   }, [id]);
 
   const handleAddToCart = async () => {
+    setCartError('');
     setAdding(true);
     try {
       await addItem(pkg._id, 1);
       setJustAdded(true);
       setTimeout(() => setJustAdded(false), 2000);
+    } catch (err) {
+      setCartError(err.response?.data?.message || 'Could not add to cart.');
     } finally {
       setAdding(false);
     }
@@ -57,9 +67,19 @@ export default function PDP() {
 
   const price = pkg.discountPrice || pkg.price;
   const hasDiscount = pkg.discountPrice && pkg.discountPrice < pkg.price;
+  const canAddToCart = !user || user.role === 'tourist';
+  const isOwnerOrAdminPreview = user && (user.role === 'admin' || (user.role === 'owner' && pkg.owner?._id === user.id)) && pkg.status !== 'published';
 
   return (
     <div className="container section pdp">
+      {isOwnerOrAdminPreview && (
+        <div className="pdp__preview-banner">
+          <StatusBadge status={pkg.status} />
+          <span>This package is not publicly visible yet — you're viewing it as a preview.</span>
+          {pkg.status === 'rejected' && pkg.rejectionReason && <span> Reason: {pkg.rejectionReason}</span>}
+        </div>
+      )}
+
       <div className="pdp__gallery">
         <div className="pdp__gallery-main">
           <img src={pkg.images[activeImage]} alt={pkg.title} />
@@ -91,7 +111,7 @@ export default function PDP() {
           </div>
           <div>
             <p className="eyebrow">Rating</p>
-            <p className="pdp__mono">{pkg.rating} ★ ({pkg.reviewCount})</p>
+            <p className="pdp__mono">{pkg.rating || '—'} ★ ({pkg.reviewCount})</p>
           </div>
           <div>
             <p className="eyebrow">Fare</p>
@@ -104,9 +124,16 @@ export default function PDP() {
 
         <p className="pdp__description">{pkg.description}</p>
 
-        <button className="pdp__cta" onClick={handleAddToCart} disabled={adding}>
-          {justAdded ? 'Added to Cart ✓' : adding ? 'Adding…' : 'Add to Cart'}
-        </button>
+        {canAddToCart ? (
+          <>
+            <button className="pdp__cta" onClick={handleAddToCart} disabled={adding}>
+              {justAdded ? 'Added to Cart ✓' : adding ? 'Adding…' : 'Add to Cart'}
+            </button>
+            {cartError && <p className="pdp__cart-error">{cartError}</p>}
+          </>
+        ) : (
+          <p className="pdp__owner-note eyebrow">Package owners and admins can't book packages.</p>
+        )}
 
         {pkg.itinerary?.length > 0 && (
           <div className="pdp__block">
@@ -142,6 +169,26 @@ export default function PDP() {
                   <li key={exc}>{exc}</li>
                 ))}
               </ul>
+            </div>
+          )}
+        </div>
+
+        <div className="pdp__block pdp__reviews">
+          <h2>Reviews {reviews.length > 0 && `(${reviews.length})`}</h2>
+          {reviews.length === 0 ? (
+            <p className="pdp__no-reviews">No reviews yet. Book this trip to be the first to review it.</p>
+          ) : (
+            <div className="pdp__review-list">
+              {reviews.map((r) => (
+                <div className="pdp__review" key={r._id}>
+                  <div className="pdp__review-header">
+                    <strong>{r.user?.name}</strong>
+                    <span className="pdp__review-stars">{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</span>
+                  </div>
+                  {r.comment && <p>{r.comment}</p>}
+                  <span className="eyebrow">{new Date(r.createdAt).toLocaleDateString()}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>

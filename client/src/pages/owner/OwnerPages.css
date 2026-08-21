@@ -1,0 +1,232 @@
+.owner-cta {
+  background: var(--ticket-red);
+  color: var(--paper);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.owner-error {
+  background: rgba(214, 69, 80, 0.1);
+  border: 1px solid var(--ticket-red);
+  color: var(--ticket-red);
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+}
+
+.owner-empty {
+  color: var(--ink-soft);
+  padding: 40px 0;
+  text-align: center;
+}
+
+.owner-table {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.owner-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto auto;
+  align-items: center;
+  gap: 18px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.owner-row__img {
+  width: 90px;
+  height: 66px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--line);
+}
+
+.owner-row__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+
+.owner-row__meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.owner-row__reason {
+  font-size: 12px;
+  color: var(--ticket-red);
+  margin: 4px 0 0;
+}
+
+.owner-row__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.owner-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.owner-btn--primary {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--paper);
+}
+
+.owner-btn--danger {
+  color: var(--ticket-red);
+  border-color: var(--ticket-red);
+}
+
+/* Package form */
+.package-form {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.package-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.package-form input,
+.package-form textarea,
+.package-form select {
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+.package-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.package-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.package-form-itinerary-day {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 10px;
+  align-items: start;
+  border-left: 2px solid var(--gold);
+  padding-left: 14px;
+}
+
+.package-form-remove {
+  background: none;
+  border: none;
+  color: var(--ticket-red);
+  font-size: 13px;
+  align-self: center;
+}
+
+.package-form-add {
+  align-self: flex-start;
+  background: var(--paper-raised);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.package-form-submit {
+  background: var(--ticket-red);
+  color: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  padding: 13px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.package-form-submit:disabled {
+  opacity: 0.7;
+}
+
+/* Received bookings / admin tables reuse similar row styling */
+.data-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.data-row {
+  display: grid;
+  grid-template-columns: 70px 1.4fr 1fr auto;
+  align-items: center;
+  gap: 16px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.data-row__img {
+  width: 70px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--line);
+}
+
+.data-row__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0 0 2px;
+}
+
+.data-row__sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .owner-row,
+  .data-row {
+    grid-template-columns: 1fr;
+  }
+  .owner-row__actions {
+    justify-content: flex-start;
+  }
+  .package-form-row {
+    grid-template-columns: 1fr;
+  }
+}

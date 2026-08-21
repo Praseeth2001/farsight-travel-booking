@@ -1,9 +1,39 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import * as api from '../services/api';
 import './Cart.css';
 
 export default function Cart() {
   const { items, totalCount, totalPrice, loading, updateItem, removeItem } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleCheckout = async () => {
+    setError('');
+
+    if (!user) {
+      navigate('/login', { state: { from: { pathname: '/cart' } } });
+      return;
+    }
+    if (user.role !== 'tourist') {
+      setError('Only tourist accounts can check out. Owner/admin accounts are for managing listings.');
+      return;
+    }
+
+    setCheckingOut(true);
+    try {
+      await api.checkout();
+      // Cart clears automatically via the socket 'cart:update' push from the backend
+      navigate('/orders');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Checkout failed. Please try again.');
+      setCheckingOut(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -65,12 +95,16 @@ export default function Cart() {
         ))}
       </div>
 
+      {error && <p className="cart-error">{error}</p>}
+
       <div className="cart-summary">
         <div>
           <p className="eyebrow">Total Fare</p>
           <p className="cart-summary__total">₹{totalPrice.toLocaleString('en-IN')}</p>
         </div>
-        <button className="cart-summary__checkout">Proceed to Checkout</button>
+        <button className="cart-summary__checkout" onClick={handleCheckout} disabled={checkingOut}>
+          {checkingOut ? 'Booking…' : 'Proceed to Checkout'}
+        </button>
       </div>
     </div>
   );

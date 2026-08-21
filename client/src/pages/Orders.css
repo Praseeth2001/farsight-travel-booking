@@ -1,0 +1,122 @@
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.order-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.order-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.order-card__total {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--ticket-red);
+}
+
+.order-item {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.order-item img {
+  width: 90px;
+  height: 66px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.order-item__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--navy);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.order-item__meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.order-item__review-btn {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--navy);
+}
+
+.order-item__reviewed {
+  font-size: 13px;
+  color: #2c7a45;
+  margin: 0;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 400px;
+  margin-top: 6px;
+}
+
+.review-form__error {
+  color: var(--ticket-red);
+  font-size: 12px;
+  margin: 0;
+}
+
+.review-form__stars {
+  display: flex;
+  gap: 4px;
+}
+
+.review-form__stars button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--line);
+}
+
+.review-form__stars button.is-active {
+  color: var(--gold);
+}
+
+.review-form textarea {
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  min-height: 60px;
+  resize: vertical;
+}
+
+.review-form button[type='submit'] {
+  align-self: flex-start;
+  background: var(--navy);
+  color: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+}

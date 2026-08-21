@@ -2,6 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Category = require('./models/Category');
 const Package = require('./models/Package');
+const User = require('./models/User');
 
 const categories = [
   { name: 'Beach', slug: 'beach', icon: '🏖️' },
@@ -17,6 +18,13 @@ async function seed() {
 
   await Category.deleteMany({});
   await Package.deleteMany({});
+  await User.deleteMany({ email: { $in: ['owner@demo.com', 'admin@demo.com', 'tourist@demo.com'] } });
+
+  // Demo accounts so you can log in immediately after seeding.
+  // Passwords are hashed automatically by the User model's pre-save hook.
+  const demoOwner = await User.create({ name: 'Demo Owner', email: 'owner@demo.com', password: 'password123', role: 'owner' });
+  await User.create({ name: 'Demo Admin', email: 'admin@demo.com', password: 'password123', role: 'admin' });
+  await User.create({ name: 'Demo Tourist', email: 'tourist@demo.com', password: 'password123', role: 'tourist' });
 
   const createdCategories = await Category.insertMany(categories);
   const byCategory = Object.fromEntries(createdCategories.map((c) => [c.slug, c._id]));
@@ -33,6 +41,8 @@ async function seed() {
       duration: '4 Days / 3 Nights',
       location: 'Goa, India',
       category: byCategory.beach,
+      owner: demoOwner._id,
+      status: "published",
       itinerary: [
         { day: 1, title: 'Arrival & Beach Time', description: 'Check-in and relax at Baga Beach.' },
         { day: 2, title: 'Water Sports', description: 'Parasailing, jet-ski, banana boat.' },
@@ -55,6 +65,8 @@ async function seed() {
       duration: '5 Days / 4 Nights',
       location: 'Manali, Himachal Pradesh',
       category: byCategory.mountain,
+      owner: demoOwner._id,
+      status: "published",
       itinerary: [
         { day: 1, title: 'Arrival in Manali', description: 'Check-in and local sightseeing.' },
         { day: 2, title: 'Solang Valley', description: 'Adventure sports and cable car ride.' },
@@ -78,6 +90,8 @@ async function seed() {
       duration: '3 Days / 2 Nights',
       location: 'Rishikesh, Uttarakhand',
       category: byCategory.adventure,
+      owner: demoOwner._id,
+      status: "published",
       itinerary: [
         { day: 1, title: 'River Rafting', description: '16km rafting on the Ganges.' },
         { day: 2, title: 'Camping & Bonfire', description: 'Riverside camp stay with bonfire.' },
@@ -99,6 +113,8 @@ async function seed() {
       duration: '4 Days / 3 Nights',
       location: 'Udaipur, Rajasthan',
       category: byCategory.honeymoon,
+      owner: demoOwner._id,
+      status: "published",
       itinerary: [
         { day: 1, title: 'Arrival & Lake Pichola', description: 'Check-in and evening boat ride.' },
         { day: 2, title: 'City Palace Tour', description: 'Guided tour and candlelight dinner.' },
@@ -121,6 +137,8 @@ async function seed() {
       duration: '5 Days / 4 Nights',
       location: 'Alleppey, Kerala',
       category: byCategory.family,
+      owner: demoOwner._id,
+      status: "published",
       itinerary: [
         { day: 1, title: 'Arrival in Kochi', description: 'Check-in and local sightseeing.' },
         { day: 2, title: 'Houseboat Stay', description: 'Overnight houseboat cruise in Alleppey.' },
@@ -137,7 +155,11 @@ async function seed() {
   ];
 
   await Package.insertMany(packages);
-  console.log(`Seeded ${createdCategories.length} categories and ${packages.length} packages.`);
+  console.log(`Seeded ${createdCategories.length} categories and ${packages.length} published packages.`);
+  console.log('Demo logins (password: password123):');
+  console.log('  Owner:   owner@demo.com');
+  console.log('  Admin:   admin@demo.com');
+  console.log('  Tourist: tourist@demo.com');
   process.exit(0);
 }
 

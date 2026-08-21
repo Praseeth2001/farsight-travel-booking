@@ -1,0 +1,127 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 64px 24px;
+}
+
+.auth-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 36px 32px 28px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 4px 0 24px;
+}
+
+.auth-error {
+  background: rgba(214, 69, 80, 0.1);
+  border: 1px solid var(--ticket-red);
+  color: var(--ticket-red);
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+}
+
+.auth-form input[type='text'],
+.auth-form input[type='email'],
+.auth-form input[type='password'] {
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--ticket-red);
+}
+
+.auth-role-select {
+  border-top: 1px dashed var(--line);
+  padding-top: 14px;
+  margin-top: 4px;
+}
+
+.auth-role-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.auth-role-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.auth-role-options label.is-selected {
+  border-color: var(--ticket-red);
+  background: rgba(214, 69, 80, 0.04);
+}
+
+.auth-role-options input {
+  accent-color: var(--ticket-red);
+}
+
+.auth-submit {
+  background: var(--ticket-red);
+  color: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  padding: 13px;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.auth-submit:disabled {
+  opacity: 0.7;
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 20px;
+}
+
+.auth-switch a {
+  color: var(--ticket-red);
+  font-weight: 600;
+}

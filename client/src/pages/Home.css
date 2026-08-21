@@ -1,0 +1,54 @@
+.hero {
+  background: var(--navy);
+  background-image: radial-gradient(circle at 85% 20%, rgba(201, 162, 39, 0.18), transparent 55%);
+  color: var(--paper);
+  padding: 80px 0 68px;
+}
+
+.hero__inner {
+  max-width: 640px;
+}
+
+.hero__eyebrow {
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.hero__subtitle {
+  font-size: 16px;
+  color: rgba(243, 238, 227, 0.75);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.section {
+  padding: 56px 0;
+}
+
+.section__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+}
+
+.skeleton-row {
+  display: flex;
+  gap: 20px;
+}

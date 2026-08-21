@@ -1,0 +1,135 @@
+.site-header {
+  background: var(--navy);
+  border-bottom: 3px double var(--gold);
+}
+
+.site-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.site-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--paper);
+}
+
+.site-header__logo-mark {
+  font-size: 20px;
+  transform: rotate(45deg);
+  display: inline-block;
+  color: var(--gold);
+}
+
+.site-header__logo-text {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.site-header__nav {
+  display: flex;
+  gap: 28px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.site-header__nav a {
+  color: rgba(243, 238, 227, 0.65);
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.site-header__nav a:hover,
+.site-header__nav a.is-active {
+  color: var(--paper);
+  border-bottom-color: var(--ticket-red);
+}
+
+.site-header__cart {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(243, 238, 227, 0.08);
+  border: 1px solid rgba(243, 238, 227, 0.25);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--paper);
+}
+
+.site-header__cart .eyebrow {
+  color: rgba(243, 238, 227, 0.65);
+}
+
+.site-header__cart-badge {
+  background: var(--ticket-red);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  transition: transform 0.2s ease;
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.site-header__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-header__user-name {
+  color: rgba(243, 238, 227, 0.85);
+}
+
+.site-header__logout,
+.site-header__login,
+.site-header__signup {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 7px 14px;
+  border: 1px solid rgba(243, 238, 227, 0.3);
+  background: transparent;
+  color: var(--paper);
+}
+
+.site-header__signup {
+  background: var(--ticket-red);
+  border-color: var(--ticket-red);
+}
+
+.site-header__logout:hover,
+.site-header__login:hover {
+  border-color: var(--paper);
+}
+
+.site-header__auth-links {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .site-header__nav {
+    display: none;
+  }
+}

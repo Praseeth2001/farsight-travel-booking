@@ -1,0 +1,30 @@
+.status-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.status-badge--draft {
+  background: #eee6d3;
+  color: #8a7233;
+}
+
+.status-badge--pending {
+  background: #fdeecb;
+  color: #a3690a;
+}
+
+.status-badge--published {
+  background: #dbeee0;
+  color: #2c7a45;
+}
+
+.status-badge--rejected {
+  background: #fbdede;
+  color: var(--ticket-red);
+}
